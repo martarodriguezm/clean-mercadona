@@ -1,3 +1,4 @@
 # Clean Mercadona
-Reimplementation of mercadona supermarkets locator using clean architecture
+Reimplementation of mercadona supermarkets locator using clean architecture.
+
 Learning while programming
