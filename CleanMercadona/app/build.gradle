@@ -1,6 +1,30 @@
 apply plugin: 'com.android.application'
+apply plugin: 'distribution'
+
+def pathVersionProperties = 'sign/version.properties'
+def pathKeystoreProperties = 'sign/keystore.properties'
+
+File versionFile = rootProject.file(pathVersionProperties)
+def codeVersion
+def nameVersion
+
+if (versionFile.exists()) {
+    Properties propertiesVersion = new Properties()
+    propertiesVersion.load(new FileInputStream(versionFile))
+    codeVersion = propertiesVersion['versionCode'].toInteger()
+    nameVersion = propertiesVersion['versionName']
+} else {
+    codeVersion = 1
+    nameVersion = "0.01"
+}
 
 android {
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
 
@@ -8,18 +32,92 @@ android {
         applicationId "marta.rodriguez.mercadonaapp.mercadona"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode codeVersion
+        versionName nameVersion
     }
+
+    File signFile = getRootProject().file(pathKeystoreProperties)
+    if (signFile.exists()) {
+        Properties properties = new Properties()
+        properties.load(new FileInputStream(signFile))
+        signingConfigs {
+            signingConfigs {
+                release {
+                    storeFile rootProject.file(properties['keystore'])
+                    storePassword properties['storePassword']
+                    keyAlias properties['keyAlias']
+                    keyPassword properties['keyPassword']
+                }
+            }
+        }
+    }
+
+
     buildTypes {
-        release {
+        debug {
+            versionNameSuffix = "-DEBUG"
+            zipAlignEnabled true
             minifyEnabled false
+        }
+
+        release {
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+            minifyEnabled false
+        }
+
+        releaseProguard {
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        android.applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                def apk = output.outputFile;
+
+                def newName;
+                if (variant.buildType.name == "release") {
+                    newName = apk.name.replace(".apk", "-v" + variant.versionName + "-RELEASE.apk");
+                } else if (variant.buildType.name == "releaseProguard") {
+                    newName = apk.name.replace(".apk", "-v" + variant.versionName + "-RELEASE_PROGUARD.apk");
+                } else {
+                    newName = apk.name.replace(".apk", "-v" + variant.versionName + "-SNAPSHOT.apk");
+                }
+
+                newName = newName.replace("-" + variant.buildType.name, "");
+
+                output.outputFile = new File(apk.parentFile, newName);
+                if (output.zipAlign) {
+                    output.zipAlign.outputFile = new File(apk.parentFile, newName.replace("-unaligned", ""));
+                }
+            }
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+distributions {
+    main {
+        baseName = nameVersion
+        contents {
+            from {'build/proguard/release'}
+            from {'build/apk'}
         }
     }
 }
 
+build.finalizedBy 'distZip'
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.2.0'
+
+    //Google libraries
+    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.google.android.gms:play-services:7.+'
+    compile 'com.android.support:design:22.+'
 }
