@@ -2,5 +2,9 @@
     <string name="admob_top_banner" translatable="false">ca-app-pub-1517528572484821/7283965226</string>
 
     <string name="app_name">Mercadona</string>
+    <string name="list">Listado</string>
+    <string name="map">Mapa</string>
+    <string name="drawer_open">Abrir menú lateral</string>
+    <string name="drawer_close">Cerrar menú lateral</string>
 
 </resources>
