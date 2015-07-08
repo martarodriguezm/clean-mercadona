@@ -11,6 +11,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
+
     <application
         android:name=".ApplicationConfig"
         android:allowBackup="true"
@@ -27,5 +31,13 @@
             </intent-filter>
         </activity>
     </application>
+
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
+
+    <meta-data
+        android:name="com.google.android.maps.v2.API_KEY"
+        android:value="AIzaSyC2h-jUH18s3znJX0MBmQq_n1Q4lexlKw8"/>
 
 </manifest>
