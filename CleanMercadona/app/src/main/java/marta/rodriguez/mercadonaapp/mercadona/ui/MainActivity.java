@@ -1,7 +1,9 @@
-package marta.rodriguez.mercadonaapp.mercadona;
+package marta.rodriguez.mercadonaapp.mercadona.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import marta.rodriguez.mercadonaapp.mercadona.R;
 
 
 public class MainActivity extends AppCompatActivity {

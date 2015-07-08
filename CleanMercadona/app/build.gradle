@@ -120,4 +120,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:+'
     compile 'com.google.android.gms:play-services:7.+'
     compile 'com.android.support:design:22.+'
+
+    //Retrofit
+    compile 'com.squareup.retrofit:retrofit:1.9.+'
 }
