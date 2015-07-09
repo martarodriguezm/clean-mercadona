@@ -1,7 +1,8 @@
 package marta.rodriguez.mercadonaapp.mercadona.ui;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import marta.rodriguez.mercadonaapp.mercadona.R;
 
 /**
@@ -19,10 +21,21 @@ import marta.rodriguez.mercadonaapp.mercadona.R;
  */
 public class BaseActivity extends AppCompatActivity {
 
+    private static final String SELECTED_ITEM = "SELECTED_ITEM";
+
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-    @Bind(R.id.content)
-    View content;
+    @Bind(R.id.navigation_view)
+    NavigationView navigationView;
+
+    private int selectedItem;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        selectedItem = getIntent().getIntExtra(SELECTED_ITEM, R.id.drawer_map);
+    }
 
     protected void initToolbar() {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -42,16 +55,33 @@ public class BaseActivity extends AppCompatActivity {
     protected void setupDrawerLayout() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        NavigationView view = (NavigationView) findViewById(R.id.navigation_view);
-        view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                Snackbar.make(content, menuItem.getTitle() + " pressed", Snackbar.LENGTH_LONG).show();
-                menuItem.setChecked(true);
-                drawerLayout.closeDrawers();
-                return true;
-            }
-        });
+        navigationView.getMenu().findItem(selectedItem).setChecked(true);
+
+                navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        Intent currentIntent = BaseActivity.this.getIntent();
+                        switch (menuItem.getItemId()) {
+                            case R.id.drawer_map:
+                                if (!currentIntent.getAction().equals(MainActivity.class.getCanonicalName())) {
+                                    Intent intent = new Intent(BaseActivity.this, MainActivity.class);
+                                    intent.putExtra(SELECTED_ITEM, menuItem.getItemId());
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                return true;
+                            case R.id.drawer_list:
+                                if (!currentIntent.getAction().equals(SupermarketsListActivity.class.getCanonicalName())) {
+                                    Intent intent = new Intent(BaseActivity.this, SupermarketsListActivity.class);
+                                    intent.putExtra(SELECTED_ITEM, menuItem.getItemId());
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                break;
+                        }
+                        return true;
+                    }
+                });
     }
 
     @Override

@@ -9,7 +9,7 @@
             android:title="@string/map"/>
 
         <item
-            android:id="@+id/drawer_favourite"
+            android:id="@+id/drawer_list"
             android:icon="@drawable/ic_view_headline_black_24dp"
             android:title="@string/list"/>
 

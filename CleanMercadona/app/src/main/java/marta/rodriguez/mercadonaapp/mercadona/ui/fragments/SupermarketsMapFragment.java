@@ -22,7 +22,7 @@ import marta.rodriguez.mercadonaapp.mercadona.R;
 /**
  * Created by martarodriguez on 8/7/15.
  */
-public class MercadonaMapFragment extends Fragment implements OnMapReadyCallback, LocationListener {
+public class SupermarketsMapFragment extends Fragment implements OnMapReadyCallback, LocationListener {
 
     private static final String PROVINCE_PARAM = "province_param";
     private static final long MIN_TIME = 400;
@@ -35,8 +35,8 @@ public class MercadonaMapFragment extends Fragment implements OnMapReadyCallback
     private MapFragment mMapFragment;
     private View rootView;
 
-    public static MercadonaMapFragment newInstance(String province) {
-        MercadonaMapFragment fragment = new MercadonaMapFragment();
+    public static SupermarketsMapFragment newInstance(String province) {
+        SupermarketsMapFragment fragment = new SupermarketsMapFragment();
         Bundle args = new Bundle();
         if(province == null) {
             province = "Madrid";

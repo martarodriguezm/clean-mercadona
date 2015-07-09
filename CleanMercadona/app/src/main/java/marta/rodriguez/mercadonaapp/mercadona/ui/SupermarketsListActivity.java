@@ -4,17 +4,16 @@ import android.os.Bundle;
 
 import butterknife.ButterKnife;
 import marta.rodriguez.mercadonaapp.mercadona.R;
-import marta.rodriguez.mercadonaapp.mercadona.ui.fragments.SupermarketsMapFragment;
+import marta.rodriguez.mercadonaapp.mercadona.ui.fragments.SupermarketsListFragment;
 
-
-public class MainActivity extends BaseActivity {
+public class SupermarketsListActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_supermarkets_list);
 
-        getIntent().setAction(MainActivity.class.getCanonicalName());
+        getIntent().setAction(SupermarketsListActivity.class.getCanonicalName());
 
         ButterKnife.bind(this);
 
@@ -22,8 +21,7 @@ public class MainActivity extends BaseActivity {
         setupDrawerLayout();
 
         getFragmentManager().beginTransaction()
-                .add(R.id.content, SupermarketsMapFragment.newInstance(null))
+                .add(R.id.content, SupermarketsListFragment.newInstance(null))
                 .commit();
     }
-
 }
