@@ -3,14 +3,20 @@ package marta.rodriguez.mercadonaapp.mercadona.ui.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import marta.rodriguez.mercadonaapp.mercadona.R;
+import marta.rodriguez.mercadonaapp.mercadona.model.Supermarket;
+import marta.rodriguez.mercadonaapp.mercadona.ui.adapters.SupermarketAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,14 +67,14 @@ public class SupermarketsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_supermarkets_list, container, false);
+        ButterKnife.bind(this, view);
 
         recyclerView.setHasFixedSize(true);
-
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(llm);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(new SupermarketAdapter(new ArrayList<Supermarket>(), R.layout.supermarket_row));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         return view;
     }
-
 
 }

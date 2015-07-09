@@ -7,11 +7,7 @@
     <string name="drawer_open">Abrir menú lateral</string>
     <string name="drawer_close">Cerrar menú lateral</string>
     <string name="title_activity_supermarkets_list">SupermarketsListActivity</string>
+    <string name="schedule">Horario: %1$s</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
