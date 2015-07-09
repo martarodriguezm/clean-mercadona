@@ -10,20 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import marta.rodriguez.mercadonaapp.mercadona.R;
 import marta.rodriguez.mercadonaapp.mercadona.model.Supermarket;
 import marta.rodriguez.mercadonaapp.mercadona.ui.adapters.SupermarketAdapter;
+import marta.rodriguez.mercadonaapp.mercadona.ui.presenters.SupermarketsListPresenter;
+import marta.rodriguez.mercadonaapp.mercadona.ui.views.SupermarketsListView;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SupermarketsListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SupermarketsListFragment extends Fragment {
+public class SupermarketsListFragment extends Fragment implements SupermarketsListView {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String PROVINCE_PARAM = "province_param";
 
@@ -31,6 +33,8 @@ public class SupermarketsListFragment extends Fragment {
 
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
+
+    private SupermarketsListPresenter presenter;
 
     /**
      * Use this factory method to create a new instance of
@@ -60,6 +64,8 @@ public class SupermarketsListFragment extends Fragment {
         if (getArguments() != null) {
             mProvince = getArguments().getString(PROVINCE_PARAM);
         }
+
+        presenter = new SupermarketsListPresenter();
     }
 
     @Override
@@ -69,12 +75,33 @@ public class SupermarketsListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_supermarkets_list, container, false);
         ButterKnife.bind(this, view);
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new SupermarketAdapter(new ArrayList<Supermarket>(), R.layout.supermarket_row));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        presenter.attachView(this);
 
         return view;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.detachView();
+    }
+
+    @Override
+    public void initUi() {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        presenter.getSupermarkets();
+    }
+
+    @Override
+    public void showSupermarkets(List<Supermarket> supermarkets) {
+        recyclerView.setAdapter(new SupermarketAdapter(supermarkets, R.layout.supermarket_row));
+    }
+
+    @Override
+    public void showError() {
+
+    }
 }
