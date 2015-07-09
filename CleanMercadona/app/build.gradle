@@ -36,7 +36,7 @@ android {
 
     defaultConfig {
         applicationId "marta.rodriguez.mercadonaapp.mercadona"
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 22
         versionCode codeVersion
         versionName nameVersion

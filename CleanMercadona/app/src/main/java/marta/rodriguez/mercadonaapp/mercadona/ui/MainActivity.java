@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import butterknife.ButterKnife;
 import marta.rodriguez.mercadonaapp.mercadona.R;
+import marta.rodriguez.mercadonaapp.mercadona.ui.fragments.MercadonaMapFragment;
 
 
 public class MainActivity extends BaseActivity {
@@ -17,6 +18,10 @@ public class MainActivity extends BaseActivity {
 
         initToolbar();
         setupDrawerLayout();
+
+        getFragmentManager().beginTransaction()
+                .add(R.id.content, MercadonaMapFragment.newInstance(null))
+                .commit();
     }
 
 }
