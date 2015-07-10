@@ -1,5 +1,6 @@
 package marta.rodriguez.mercadonaapp.mercadona.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import marta.rodriguez.mercadonaapp.mercadona.model.Supermarket;
@@ -12,6 +13,6 @@ public class SupermarketDataRepository implements SupermarketRepository {
 
     @Override
     public List<Supermarket> getSupermarkets() {
-        return null;
+        return new ArrayList<>();
     }
 }
