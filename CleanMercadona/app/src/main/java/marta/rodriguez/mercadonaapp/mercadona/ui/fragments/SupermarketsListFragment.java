@@ -15,6 +15,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import marta.rodriguez.mercadonaapp.mercadona.R;
+import marta.rodriguez.mercadonaapp.mercadona.interactors.SupermarketsInteractor;
 import marta.rodriguez.mercadonaapp.mercadona.model.Supermarket;
 import marta.rodriguez.mercadonaapp.mercadona.ui.adapters.SupermarketAdapter;
 import marta.rodriguez.mercadonaapp.mercadona.ui.presenters.SupermarketsListPresenter;
@@ -65,7 +66,7 @@ public class SupermarketsListFragment extends Fragment implements SupermarketsLi
             mProvince = getArguments().getString(PROVINCE_PARAM);
         }
 
-        presenter = new SupermarketsListPresenter();
+        presenter = new SupermarketsListPresenter(new SupermarketsInteractor());
     }
 
     @Override
