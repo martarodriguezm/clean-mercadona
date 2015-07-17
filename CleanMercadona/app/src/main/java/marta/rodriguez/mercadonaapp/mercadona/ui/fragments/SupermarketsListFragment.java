@@ -97,8 +97,13 @@ public class SupermarketsListFragment extends Fragment implements SupermarketsLi
     }
 
     @Override
-    public void showSupermarkets(List<Supermarket> supermarkets) {
-        recyclerView.setAdapter(new SupermarketAdapter(supermarkets, R.layout.supermarket_row));
+    public void showSupermarkets(final List<Supermarket> supermarkets) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView.setAdapter(new SupermarketAdapter(supermarkets, R.layout.supermarket_row));
+            }
+        });
     }
 
     @Override

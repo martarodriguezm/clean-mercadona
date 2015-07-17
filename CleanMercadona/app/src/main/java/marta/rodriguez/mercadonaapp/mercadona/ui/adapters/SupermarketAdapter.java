@@ -57,7 +57,7 @@ public class SupermarketAdapter extends RecyclerView.Adapter<SupermarketAdapter.
         public ViewHolder(View itemView, Context c) {
             super(itemView);
             this.mCtx = c;
-            ButterKnife.bind(itemView);
+            ButterKnife.bind(c, itemView);
         }
 
         public void bindSupermarket(Supermarket supermarket) {

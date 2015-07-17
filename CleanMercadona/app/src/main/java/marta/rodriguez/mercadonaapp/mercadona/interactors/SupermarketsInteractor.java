@@ -1,18 +1,20 @@
 package marta.rodriguez.mercadonaapp.mercadona.interactors;
 
-import marta.rodriguez.mercadonaapp.mercadona.interactors.listeners.BaseListener;
+import java.util.List;
+
+import marta.rodriguez.mercadonaapp.mercadona.api.ApiaryClient;
+import marta.rodriguez.mercadonaapp.mercadona.model.Supermarket;
 
 /**
  * Created by martarodriguez on 9/7/15.
  */
-public class SupermarketsInteractor extends InteractorBase{
+public class SupermarketsInteractor {
 
     public SupermarketsInteractor() {
 
     }
 
-    @Override
-    public void executeUseCase(BaseListener listener) {
-
+    public List<Supermarket> getSupermarkets() {
+        return ApiaryClient.getSupermarketsApiClient().getSupermarkets("madrid");
     }
 }

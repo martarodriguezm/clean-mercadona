@@ -1,17 +1,18 @@
 package marta.rodriguez.mercadonaapp.mercadona.ui.presenters;
 
-import marta.rodriguez.mercadonaapp.mercadona.interactors.InteractorBase;
-import marta.rodriguez.mercadonaapp.mercadona.interactors.listeners.BaseListener;
+import java.util.List;
+
+import marta.rodriguez.mercadonaapp.mercadona.interactors.SupermarketsInteractor;
 import marta.rodriguez.mercadonaapp.mercadona.ui.views.SupermarketsListView;
 
 /**
  * Created by martarodriguez on 9/7/15.
  */
-public class SupermarketsListPresenter extends Presenter<SupermarketsListView> implements BaseListener {
+public class SupermarketsListPresenter extends Presenter<SupermarketsListView> {
 
-    InteractorBase interactor;
+    SupermarketsInteractor interactor;
 
-    public SupermarketsListPresenter(InteractorBase interactor) {
+    public SupermarketsListPresenter(SupermarketsInteractor interactor) {
         this.interactor = interactor;
     }
 
@@ -21,11 +22,16 @@ public class SupermarketsListPresenter extends Presenter<SupermarketsListView> i
     }
 
     public void getSupermarkets() {
-        interactor.executeUseCase(this);
-    }
-
-    @Override
-    public void showError() {
-
+        new Thread() {
+            @Override
+            public void run() {
+                List supermarkets = interactor.getSupermarkets();
+                if(supermarkets != null) {
+                    getView().showSupermarkets(supermarkets);
+                } else {
+                    getView().showError();
+                }
+            }
+        }.start();
     }
 }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import marta.rodriguez.mercadonaapp.mercadona.Constants;
 import marta.rodriguez.mercadonaapp.mercadona.model.Supermarket;
-import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -20,6 +19,7 @@ public class ApiaryClient {
         if (sSupermarketsService == null) {
             RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint(Constants.API_URL)
+                    .setLogLevel(RestAdapter.LogLevel.FULL)
                     .build();
 
             sSupermarketsService = restAdapter.create(SupermarketsApiInterface.class);
@@ -30,6 +30,6 @@ public class ApiaryClient {
 
     public interface SupermarketsApiInterface {
         @GET("/supermarkets/{province}")
-        void getSupermarkets(@Path("province") String province, Callback<List<Supermarket>> callback);
+        List<Supermarket> getSupermarkets(@Path("province") String province);
     }
 }
