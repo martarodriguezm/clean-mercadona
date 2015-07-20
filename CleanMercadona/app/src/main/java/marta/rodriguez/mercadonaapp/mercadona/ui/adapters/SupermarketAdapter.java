@@ -45,19 +45,16 @@ public class SupermarketAdapter extends RecyclerView.Adapter<SupermarketAdapter.
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.address)
-        TextView address;
-        @Bind(R.id.town)
-        public TextView town;
-        @Bind(R.id.schedule)
-        public TextView schedule;
+        @Bind(R.id.address) TextView address;
+        @Bind(R.id.town) TextView town;
+        @Bind(R.id.schedule) TextView schedule;
 
         private Context mCtx;
 
         public ViewHolder(View itemView, Context c) {
             super(itemView);
             this.mCtx = c;
-            ButterKnife.bind(c, itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         public void bindSupermarket(Supermarket supermarket) {
